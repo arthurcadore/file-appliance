@@ -33,3 +33,19 @@ services:
       dockerfile: ./docker/Dockerfile-TFTP
     network_mode: "host"
     restart: always
+
+  # SCP server service:
+  sshserver:
+    container_name: sshserver
+    ports:
+      - '2222:22'
+    volumes:
+      - "ssh-keys:/root/.ssh"
+      - "./data/:/home/infraremp/"
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-SCP
+    restart: always
+
+volumes:
+  ssh-keys:

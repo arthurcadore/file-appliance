@@ -1,0 +1,25 @@
+# Dockerfile: Defines container specifications to startup and run.
+# Author: Arthur Cadore M. Barcella
+# Github: arthurcadore
+
+# Use Alpine Linux as base image
+FROM alpine:latest
+
+# Install OpenSSH server
+RUN apk update && \
+    apk add openssh && \
+    rm -rf /var/cache/apk/*
+
+# Generate host keys
+RUN ssh-keygen -A
+
+# Add user "infraremp" with password "infraremp"
+RUN adduser -D infraremp
+RUN echo "infraremp:infraremp" | chpasswd
+
+COPY docker/startup-SCP.sh /usr/sbin/startup.sh
+
+RUN chmod +x /usr/sbin/startup.sh
+
+# Start SSH server and keep container running
+CMD ["/usr/sbin/startup.sh"]
