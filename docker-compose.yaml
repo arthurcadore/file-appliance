@@ -25,13 +25,12 @@ services:
   tftpserver:
     container_name: tftpserver
     ports:
-      - "514:514/udp"
+      - "69:69/udp"
     volumes:
       - "./data:/tftpshare"
     build:
       context: .
       dockerfile: ./docker/Dockerfile-TFTP
-    network_mode: "host"
     restart: always
 
   # SCP server service:
