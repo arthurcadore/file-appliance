@@ -1,25 +1,9 @@
-# Main composition file for FTP Application Container.
+# Main composition file for serial upgrade container.
 # Author: Arthur Cadore M. Barcella
 # Github: arthurcadore
 
 version: '3.8'
 services:
-
-  # FTP server service:
-  ftpserver:
-    container_name: ftpserver
-    ports:
-      - '21:21' # FTP Control Connection Ports
-      - '65000-65004:65000-65004' # FTP Transfer ports
-    volumes:
-       - "./data/:/data/infraremp"
-       - "./log:/var/log/"
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile-FTP
-    env_file:
-      - ./env/.env_ftp
-    restart: always
 
   # TFTP server service:
   tftpserver:
@@ -33,18 +17,13 @@ services:
       dockerfile: ./docker/Dockerfile-TFTP
     restart: always
 
-  # SCP server service:
-  sshserver:
-    container_name: sshserver
-    ports:
-      - '2222:22'
-    volumes:
-      - "ssh-keys:/root/.ssh"
-      - "./data/:/home/infraremp/"
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile-SCP
+  # Ping container to 192.168.0.1
+  ping-container:
+    container_name: ping-container
+    image: alpine
+    command: sh -c "while true; do ping -c 4 192.168.0.1; sleep 1; done"
     restart: always
+    network_mode: host   # Isso garante que o contêiner use a rede do host
 
 volumes:
   ssh-keys:
