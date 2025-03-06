@@ -23,7 +23,7 @@ services:
     image: alpine
     command: sh -c "while true; do ping -c 4 192.168.0.1; sleep 1; done"
     restart: always
-    network_mode: host   # Isso garante que o contêiner use a rede do host
+    network_mode: host 
 
 volumes:
   ssh-keys:
