@@ -21,17 +21,18 @@ services:
   ping-container:
     container_name: ping-container
     image: alpine
-    command: sh -c "while true; do if ping -c 4 192.168.0.1 > /dev/null 2>&1; then echo 'Finalizado'; else echo 'Atualizando...'; fi; sleep 1; done"
+    command: sh -c "while true; do if ping -c 4 192.168.0.1 > /dev/null 2>&1; then echo 'Aguardando produto / Finalizado'; else echo 'Produto Fora...'; fi; sleep 1; done"
     restart: always
     network_mode: host 
 
-  # tcpdump-container:
-  #   container_name: tcpdump-container
-  #   image: alpine
-  #   network_mode: host
-  #   privileged: true
-  #   command: sh -c "apk add --no-cache tcpdump && tcpdump -i any udp"
-  #   restart: always
+  tcpdump-container:
+    container_name: tcpdump-container
+    image: alpine
+    network_mode: host
+    privileged: true
+    command: sh -c "apk add --no-cache tcpdump && tcpdump -l -i any udp port 69 | while read -r line; do echo 'Baixando arquivo....'; done"
+    restart: always
+
 
 volumes:
   ssh-keys:
