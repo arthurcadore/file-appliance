@@ -21,7 +21,7 @@ services:
   ping-container:
     container_name: ping-container
     image: alpine
-    command: sh -c "while true; do ping -c 4 192.168.0.1; sleep 1; done"
+    command: sh -c "while true; do if ping -c 4 192.168.0.1 > /dev/null 2>&1; then echo 'Finalizado'; else echo 'Atualizando...'; fi; sleep 1; done"
     restart: always
     network_mode: host 
 
