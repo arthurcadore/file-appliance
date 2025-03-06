@@ -16,5 +16,7 @@ ps aux
 # Verify the status of the TFTP port:
 netstat -anu
 
+touch /var/log/syslog
+
 # Keep the container running
-tail -f /dev/null
+tail -f /var/log/syslog | grep tftp
