@@ -1,3 +1,5 @@
+.PHONY: all stop start build clean netplan docker download
+
 all: stop start
 
 stop:
