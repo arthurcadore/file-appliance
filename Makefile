@@ -13,10 +13,10 @@ clean: stop
 	docker ps -a -q | xargs docker rm ; docker images -q | xargs docker rmi -f ; docker volume ls -q | xargs docker volume rm
 
 netplan:
-	cd scripts && sudo ./netplan.sh
+	$(MAKE) -C scripts netplan
 
 docker:
-	cd scripts && ./installDocker.sh
+	$(MAKE) -C scripts docker
 
 download:
-	cd scripts && ./downloadFile.sh
+	$(MAKE) -C scripts download
