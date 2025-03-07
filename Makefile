@@ -1,11 +1,11 @@
 .PHONY: all stop start build clean netplan docker download
 
-all: stop start
+all: stop build start
 
 stop:
 	docker compose down
 
-start: build
+start: 
 	docker compose up &
 
 build:
